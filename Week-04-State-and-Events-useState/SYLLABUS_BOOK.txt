@@ -1,0 +1,304 @@
+================================================================================
+WEEK 04 SYLLABUS BOOK: STATE & EVENTS (useState)
+================================================================================
+Target Audience: Plus Two (+2 / High School) Beginners
+Estimated Time: 4 to 6 Hours
+Focus: The useState Hook, Event Listeners, and Conditional Rendering
+Milestone Project: "Interactive Flashcard Quiz Master"
+================================================================================
+
+--------------------------------------------------------------------------------
+TABLE OF CONTENTS
+--------------------------------------------------------------------------------
+1. Props vs State (Why we need State)
+2. What is a React Hook?
+3. The useState Hook: Anatomy and Usage
+4. Handling User Events (onClick, onChange)
+5. The Cardinal Rule: NEVER Mutate State Directly!
+6. Conditional Rendering: Showing and Hiding UI
+7. Weekly Hands-on Project: "Flashcard Quiz Master"
+8. Common Pitfalls & Traps for Beginners
+9. Self-Assessment Quiz & Exercises
+
+================================================================================
+CHAPTER 1: PROPS VS STATE (COMPONENT MEMORY)
+================================================================================
+Think of a TV set:
+- PROPS: The TV's screen size, brand, and color. These are configured when the 
+  TV is manufactured and handed to you. They do NOT change on their own.
+- STATE: The current channel, the volume level, and whether the TV is ON or OFF. 
+  Every time you press a button on the remote, the STATE changes!
+
+In React:
+- Props: Data passed FROM a parent component TO a child (Read-only).
+- State: Data that lives INSIDE a component that can CHANGE over time due to user 
+  action (clicks, keystrokes, timers).
+
+Whenever state changes, React AUTOMATICALLY re-renders the component to show the 
+updated data!
+
+================================================================================
+CHAPTER 2: WHAT IS A REACT HOOK?
+================================================================================
+Hooks are special built-in functions provided by React that allow functional 
+components to "hook into" React features like State and Lifecycle.
+
+All React hooks start with the word "use":
+- `useState`: Gives a component internal memory.
+- `useEffect`: Handles side effects (Week 6).
+- `useRef`, `useContext`, `useMemo` (Advanced hooks for later).
+
+Rule of Hooks:
+1. Only call hooks at the VERY TOP of your component function.
+2. NEVER put a hook inside an `if` statement, `for` loop, or nested function.
+
+================================================================================
+CHAPTER 3: THE useState HOOK IN ACTION
+================================================================================
+To use `useState`, you first import it from 'react':
+
+import { useState } from 'react';
+
+Syntax:
+const [stateVariable, setFunction] = useState(initialValue);
+
+Example: A Simple Click Counter
+-------------------------------
+import { useState } from 'react';
+
+function Counter() {
+  // 1. Declare state variable 'count' initialized to 0
+  const [count, setCount] = useState(0);
+
+  function handleIncrement() {
+    setCount(count + 1); // Updates state and triggers re-render!
+  }
+
+  function handleDecrement() {
+    setCount(count - 1);
+  }
+
+  return (
+    <div style={{ textAlign: "center", padding: "20px" }}>
+      <h2>Current Score: {count}</h2>
+      <button onClick={handleDecrement}>- Decrease</button>
+      <button onClick={() => setCount(0)} style={{ margin: "0 10px" }}>Reset</button>
+      <button onClick={handleIncrement}>+ Increase</button>
+    </div>
+  );
+}
+
+export default Counter;
+
+================================================================================
+CHAPTER 4: HANDLING USER EVENTS
+================================================================================
+In standard HTML:
+  <button onclick="handleClick()">Click Me</button>
+
+In React JSX:
+  <button onClick={handleClick}>Click Me</button>
+
+Key differences:
+1. React events use camelCase (`onClick`, `onChange`, `onSubmit`, `onMouseEnter`).
+2. You pass a FUNCTION REFERENCE (`handleClick`), NOT a function call 
+   (`handleClick()`).
+
+BIGGEST BEGINNER MISTAKE:
+  ❌ <button onClick={setCount(count + 1)}>Click</button>
+  Why this breaks: `setCount(...)` runs IMMEDIATELY as soon as the page loads, 
+  triggering an infinite render loop crash!
+
+  ✅ <button onClick={() => setCount(count + 1)}>Click</button>
+  Now it only runs when the user actually CLICKS the button!
+
+================================================================================
+CHAPTER 5: THE CARDINAL RULE — NEVER MUTATE STATE DIRECTLY!
+================================================================================
+In regular JavaScript, if you want to increase a number, you write:
+  let count = 0;
+  count++;
+
+In React, this will NEVER WORK:
+  ❌ count = count + 1; // React has NO IDEA you changed the variable!
+  React will not re-render the screen.
+
+Always use the setter function:
+  ✅ setCount(count + 1); // Notifies React to repaint the UI!
+
+================================================================================
+CHAPTER 6: CONDITIONAL RENDERING (SHOW / HIDE UI)
+================================================================================
+Often you want to show or hide something based on state (e.g. show "Log Out" 
+when logged in, show "Log In" when logged out).
+
+1. Ternary Operator (condition ? IfTrue : IfFalse):
+   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+   return (
+     <div>
+       {isLoggedIn ? <p>Welcome back, Student!</p> : <p>Please Log In.</p>}
+       <button onClick={() => setIsLoggedIn(!isLoggedIn)}>
+         {isLoggedIn ? "Log Out" : "Log In"}
+       </button>
+     </div>
+   );
+
+2. Logical AND Operator (condition && <Component />):
+   Use when you want to show something ONLY if true, and nothing if false:
+   const [showSpoiler, setShowSpoiler] = useState(false);
+
+   return (
+     <div>
+       <button onClick={() => setShowSpoiler(!showSpoiler)}>Toggle Spoiler</button>
+       {showSpoiler && <p style={{ color: "orange" }}>Vader is Luke's father!</p>}
+     </div>
+   );
+
+================================================================================
+CHAPTER 7: WEEKLY HANDS-ON PROJECT: "FLASHCARD QUIZ MASTER"
+================================================================================
+Goal: Build an interactive study flashcard app. A card shows a question. 
+Clicking the card flips it to show the answer. Users click "Next Question" or 
+"Previous Question".
+
+src/App.jsx:
+------------
+import { useState } from "react";
+
+const quizQuestions = [
+  {
+    id: 1,
+    question: "What is the capital city of France?",
+    answer: "Paris",
+    category: "Geography"
+  },
+  {
+    id: 2,
+    question: "What hook is used to add state to a functional component?",
+    answer: "useState()",
+    category: "React"
+  },
+  {
+    id: 3,
+    question: "What is the speed of light in vacuum?",
+    answer: "Approximately 3 x 10^8 m/s",
+    category: "Physics"
+  },
+  {
+    id: 4,
+    question: "Which data structure uses LIFO (Last In, First Out)?",
+    answer: "A Stack",
+    category: "Computer Science"
+  }
+];
+
+function App() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isFlipped, setIsFlipped] = useState(false);
+  const [score, setScore] = useState(0);
+
+  const currentCard = quizQuestions[currentIndex];
+
+  function handleNext() {
+    setIsFlipped(false);
+    if (currentIndex < quizQuestions.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+    } else {
+      setCurrentIndex(0); // Loop back to start
+    }
+  }
+
+  function handleCorrect() {
+    setScore(score + 1);
+    handleNext();
+  }
+
+  return (
+    <div style={{
+      minHeight: "100vh",
+      backgroundColor: "#0f172a",
+      color: "white",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      fontFamily: "sans-serif"
+    }}>
+      <h1>🧠 High School Quiz Master</h1>
+      <p style={{ color: "#94a3b8" }}>Score: {score} pts | Card {currentIndex + 1} of {quizQuestions.length}</p>
+
+      {/* The Flip Card */}
+      <div 
+        onClick={() => setIsFlipped(!isFlipped)}
+        style={{
+          width: "360px",
+          height: "220px",
+          backgroundColor: isFlipped ? "#10b981" : "#1e293b",
+          border: "2px solid #3b82f6",
+          borderRadius: "16px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "24px",
+          cursor: "pointer",
+          margin: "20px 0",
+          boxShadow: "0 10px 25px rgba(0,0,0,0.5)",
+          textAlign: "center",
+          transition: "background-color 0.3s ease"
+        }}
+      >
+        <span style={{ fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", marginBottom: "12px", opacity: 0.8 }}>
+          Category: {currentCard.category} (Click to Flip)
+        </span>
+        <h3 style={{ fontSize: "20px", fontWeight: "600" }}>
+          {isFlipped ? currentCard.answer : currentCard.question}
+        </h3>
+        <span style={{ marginTop: "16px", fontSize: "13px", opacity: 0.7 }}>
+          {isFlipped ? "💡 (Answer shown)" : "❓ (Tap to see answer)"}
+        </span>
+      </div>
+
+      {/* Action Buttons */}
+      <div style={{ display: "flex", gap: "12px" }}>
+        <button 
+          onClick={handleCorrect}
+          style={{ padding: "10px 18px", backgroundColor: "#22c55e", color: "white", border: "none", borderRadius: "8px", cursor: "pointer", fontWeight: "bold" }}>
+          ✅ I Knew This (+1 Pt)
+        </button>
+        <button 
+          onClick={handleNext}
+          style={{ padding: "10px 18px", backgroundColor: "#ef4444", color: "white", border: "none", borderRadius: "8px", cursor: "pointer", fontWeight: "bold" }}>
+          ❌ Didn't Know / Skip
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export default App;
+
+================================================================================
+CHAPTER 8: COMMON PITFALLS
+================================================================================
+1. Calling a setter inside the JSX render path:
+   `<button onClick={alert("Hi")}>` -> Always wrap in `() => alert("Hi")`.
+2. Assuming state updates are instantaneous:
+   Calling `setCount(count + 1); console.log(count);` will still print the OLD
+   count in the same function because React batches state updates asynchronously.
+
+================================================================================
+CHAPTER 9: SELF-ASSESSMENT QUIZ & EXERCISES
+================================================================================
+Quiz:
+1. Explain the difference between Props and State in one sentence.
+2. In the array destructuring `const [status, setStatus] = useState("idle");`,
+   what is `setStatus`?
+3. How do you conditionally display an alert message only if `hasError` is true?
+4. What happens if you modify state directly like `myState = "new value"`?
+
+Weekend Challenge:
+Add a "Reset Game" button to the Quiz Master that resets the score back to 0
+and navigates back to card #1!
+================================================================================

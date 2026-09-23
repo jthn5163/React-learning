@@ -1,0 +1,183 @@
+================================================================================
+WEEK 08 SYLLABUS BOOK: CAPSTONE PROJECT & LIVE DEPLOYMENT
+================================================================================
+Target Audience: Plus Two (+2 / High School) Beginners
+Estimated Time: 6 to 8 Hours
+Focus: Production Architecture, Git/GitHub, and Free Cloud Hosting (Vercel)
+Milestone Project: "Live Hosted Capstone Portfolio"
+================================================================================
+
+--------------------------------------------------------------------------------
+TABLE OF CONTENTS
+--------------------------------------------------------------------------------
+1. The Finish Line: What Makes a Senior React Project?
+2. Professional Folder Architecture
+3. Choosing Your Capstone Project Theme
+4. Git & GitHub: Saving Your Work in the Cloud
+5. The Production Build: What "npm run build" Does
+6. Deploying Live to the Internet for FREE with Vercel
+7. Setting Up a Great Project README
+8. Graduation Checklist & Where to Go Next in Tech
+9. Final Course Self-Assessment Quiz
+
+================================================================================
+CHAPTER 1: THE FINISH LINE
+================================================================================
+Congratulations on reaching Week 8!
+Over the past 7 weeks, you progressed from raw HTML tags and CSS flex containers 
+to building interactive, multi-page applications consuming live web APIs.
+
+This final week is about taking everything you have built, polishing it to 
+commercial standards, and putting it LIVE on the internet with a public link you 
+can share with classmates, teachers, college interviewers, and family!
+
+================================================================================
+CHAPTER 2: PROFESSIONAL FOLDER ARCHITECTURE
+================================================================================
+In commercial tech companies, professional codebases follow standard layout 
+conventions:
+
+src/
+├── assets/          -> Images, SVG icons, fonts, audio files
+├── components/      -> Reusable UI bricks (Button, Navbar, Modal, Card)
+├── pages/           -> Full route screens (Home, About, Dashboard, ProjectView)
+├── data/            -> Static JSON data or mock lists
+├── hooks/           -> Custom reusable React hooks
+├── styles/          -> Global stylesheets and CSS variable tokens
+├── App.jsx          -> Main route configuration and layout shell
+└── main.jsx         -> React entry point
+
+Golden Rule: Keep components small and focused! If a file exceeds 150 lines, 
+break sub-sections into child components.
+
+================================================================================
+CHAPTER 3: CHOOSING YOUR CAPSTONE PROJECT
+================================================================================
+Pick ONE of these three options for your Capstone:
+
+OPTION A: The Personal Developer Portfolio (RECOMMENDED)
+- Hero section with your photo, name, and bio.
+- "My Skills" section with interactive skill badges.
+- "Projects Showcase" featuring the apps you built in Weeks 1 to 7 with live demo 
+  links and GitHub repo links.
+- "Contact Me" controlled form with social links.
+
+OPTION B: The Ultimate Study & Pomodoro Hub
+- Customizable Pomodoro timer (25 min study / 5 min break) with audio chimes.
+- Study session counter tracking daily focus streaks.
+- Integrated study checklist with categories (Physics, Math, CS).
+- Saves task history to the browser's `localStorage` so data survives page refresh.
+
+OPTION C: Cricket / Football Live Match Explorer
+- Search matches and view tournament leaderboards using free sports APIs.
+- Filter by team or match type.
+
+================================================================================
+CHAPTER 4: GIT & GITHUB CRASH COURSE
+================================================================================
+Git is the industry standard version control system. GitHub is the cloud 
+platform where developers store and share their repositories.
+
+Step 1: Initialize Git in your project folder (in terminal):
+  git init
+
+Step 2: Check status of your files:
+  git status
+
+Step 3: Stage all files for a snapshot:
+  git add .
+
+Step 4: Commit the snapshot with a message:
+  git commit -m "feat: complete initial capstone app build"
+
+Step 5: Link to your GitHub account:
+  1. Go to https://github.com and sign up / log in.
+  2. Click "New Repository", name it `my-react-capstone`, and choose "Public".
+  3. Copy the 3 commands GitHub shows you and paste them in your terminal:
+     git branch -M main
+     git remote add origin https://github.com/YOUR_USERNAME/my-react-capstone.git
+     git push -u origin main
+
+Your code is now safely backed up in the cloud!
+
+================================================================================
+CHAPTER 5: THE PRODUCTION BUILD
+================================================================================
+During development, Vite serves unminified files so you can debug easily.
+When ready to publish to the world, run:
+
+  npm run build
+
+What this command does:
+1. Compiles all JSX and modern JavaScript into ultra-fast, minified JS.
+2. Purges unused CSS rules and shrinks file sizes.
+3. Outputs everything into a clean `dist/` folder ready to be served anywhere!
+
+You can test how your production build runs locally by typing:
+  npm run preview
+
+================================================================================
+CHAPTER 6: 1-CLICK FREE DEPLOYMENT WITH VERCEL
+================================================================================
+Vercel is the world's premier cloud hosting platform for modern web applications.
+Best of all: it is 100% FREE for student projects!
+
+Deployment in 4 Easy Steps:
+1. Go to https://vercel.com and click "Sign Up" with your GitHub account.
+2. In your Vercel Dashboard, click "Add New..." -> "Project".
+3. Vercel will list your GitHub repositories. Find `my-react-capstone` and click 
+   "Import".
+4. Keep the default settings (Vercel automatically detects Vite!) and click 
+   "Deploy".
+
+Within 30 seconds, Vercel gives you a LIVE public URL:
+  https://my-react-capstone.vercel.app
+
+Anyone with an internet connection anywhere on earth can now use your app!
+
+================================================================================
+CHAPTER 7: CRAFTING A GREAT PROJECT README
+================================================================================
+Every serious project on GitHub needs a clean `README.md`. 
+Include:
+- 🚀 Project Title and one-sentence elevator pitch.
+- 🔗 Live Demo link.
+- 📸 Screenshot or animated GIF of the app in action.
+- ⚡ Features list (bullet points).
+- 🛠️ Tech Stack tags (React, Vite, CSS Modules, Lucide-React).
+- 💻 How to run locally (`npm install`, `npm run dev`).
+
+================================================================================
+CHAPTER 8: GRADUATION CHECKLIST & WHAT'S NEXT
+================================================================================
+You now possess real frontend development skills that many university computer 
+science students don't learn until their 3rd year!
+
+Your React Competency Checklist:
+- [x] HTML5 Semantics & CSS Flexbox responsive layouts
+- [x] ES6+ Modern JavaScript (Arrow functions, .map, .filter, Destructuring)
+- [x] Vite project scaffolding and JSX mechanics
+- [x] Component architecture & Unidirectional Props
+- [x] State management with useState and Event listeners
+- [x] Dynamic Lists, Unique Keys, and Controlled Forms
+- [x] Side Effects, REST APIs, and Lifecycle with useEffect
+- [x] Client-Side Routing with react-router-dom
+- [x] Production Bundling, Git Version Control & Vercel Deployment
+
+Where to go next in your journey:
+1. **Tailwind CSS**: Utility-first CSS framework for lightning-fast UI styling.
+2. **TypeScript**: Adding strict static types to JavaScript to catch bugs early.
+3. **Backend Basics**: Learn Node.js and Express to build your own REST APIs.
+4. **Next.js**: The full-stack production framework built on top of React.
+
+================================================================================
+CHAPTER 9: FINAL COURSE SELF-ASSESSMENT QUIZ
+================================================================================
+1. What command transforms your React development code into optimized production 
+   assets in Vite?
+2. What is the role of Git vs GitHub?
+3. Name 3 essential folders in a professional React `src/` directory.
+4. How do you push code updates to your live deployed Vercel site after making a 
+   change? (Hint: Git push!)
+5. Share your live Vercel URL with 3 friends or family members! 🎓
+================================================================================

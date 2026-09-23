@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: rgba(0, 0, 0, 0.402);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    ul{
+      list-style: none;
+    }
+
+    li{
+      font-size: 0.8rem; 
+    }
+
+    main{
+      /* border: 1px solid black; */
+      width:100%;
+      display:flex;
+      justify-content: center;
+    }
+
+    .card-section{
+      width:50%;
+      /* border: 1px solid black; */
+      padding: 20px;
+
+      display: flex;
+      justify-content: center;
+    }
+
+    .card {
+      background-color: rgba(8, 17, 146, 0.475);
+      border: 1px solid rgba(0, 0, 0, 0.344);
+      border-radius: 5px;
+      padding: 20px;
+      width: 90%;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    img{
+      height: 100px;
+      border-radius: 10px;
+      width: auto;
+    }
+
+    .name {
+      margin: 10px 0 2px 0;
+    }
+
+    .role {
+      margin: 0px 0 20px 0;
+    }
+
+    .skill-card{
+      /* border: 2px solid rgba(0, 0, 0, 0.317); */
+      padding: 2px 50px;
+    }
+
+    .contact-card{
+      margin: 10px 0;
+    }
+
+    .contact-card button {
+      padding: 5px;
+      border: 1px solid black;
+      border-radius: 5px;
+      background-color: rgb(168, 157, 9);
+      cursor: pointer;
+      font-size: 20px;
+    }
+
+    button:hover{
+      background-color: rgb(171, 163, 21);
+    }
+
+    button:active{
+      transform: translate3d(0.5px, 1px, 0);
+      box-shadow: 2px 2px rgba(0, 0, 0, 0.276);
+      background-color: rgb(193, 184, 15);
+      font-size: 19.9px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="card-section">
+      <div class="card">
+         <img src="https://res.cloudinary.com/dwaengdnb/image/upload/v1778946941/profile_xqi30n.jpg" alt="">
+         <h2 class="name">Jithin</h2>
+         <p class="role">I'm a Full stack developer</p>
+
+         <div class="skill-card">
+          <h4>Known Skills</h4>
+          <div class="skills">
+            <ul>
+               <li>HTML</li>
+               <li>CSS</li>
+               <li>JAVASCRIPT</li>
+            </ul>
+          </div>
+         </div>
+
+        <div class="contact-card">
+          <button>Get in touch</button>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,279 @@
+================================================================================
+WEEK 06 SYLLABUS BOOK: SIDE EFFECTS & APIs (useEffect)
+================================================================================
+Target Audience: Plus Two (+2 / High School) Beginners
+Estimated Time: 4 to 6 Hours
+Focus: Side Effects, The useEffect Hook, REST APIs, and Async Data Fetching
+Milestone Project: "Live Weather & Advice Generator"
+================================================================================
+
+--------------------------------------------------------------------------------
+TABLE OF CONTENTS
+--------------------------------------------------------------------------------
+1. What is a "Side Effect"?
+2. The useEffect Hook: Syntax and Mechanics
+3. The Dependency Array: The 3 Scenarios
+4. What is a REST API? (How Frontend talks to Backend)
+5. Fetching Real Data with fetch() and async/await
+6. Handling the 3 Network States (Loading, Error, Success)
+7. Weekly Hands-on Project: "Live Weather & Advice Generator"
+8. The Infinite Loop Trap (And How to Avoid It)
+9. Self-Assessment Quiz & Exercises
+
+================================================================================
+CHAPTER 1: WHAT IS A "SIDE EFFECT"?
+================================================================================
+A React component's main job is pure and simple:
+  Input (Props & State) ===> Output (JSX on Screen)
+
+However, websites often need to do things outside React's UI:
+1. Fetching live cricket scores or weather from a remote server over the internet.
+2. Setting a timer or interval (`setInterval`).
+3. Changing the browser tab title (`document.title = "New Message!"`).
+4. Saving user preferences to the browser's `localStorage`.
+
+These outside operations are called SIDE EFFECTS.
+In React, we manage side effects using the `useEffect` hook!
+
+================================================================================
+CHAPTER 2: THE useEffect HOOK
+================================================================================
+Importing useEffect:
+  import { useEffect, useState } from 'react';
+
+Syntax:
+  useEffect(() => {
+    // 1. Code to run for the side effect
+  }, [/* 2. Dependency Array */]);
+
+Example: Updating Browser Tab Title
+-----------------------------------
+function NotificationBadge() {
+  const [unreadCount, setUnreadCount] = useState(0);
+
+  useEffect(() => {
+    // This runs whenever unreadCount changes!
+    document.title = unreadCount > 0 ? `(${unreadCount}) New Notifications` : "My App";
+  }, [unreadCount]);
+
+  return (
+    <button onClick={() => setUnreadCount(unreadCount + 1)}>
+      Receive Notification
+    </button>
+  );
+}
+
+================================================================================
+CHAPTER 3: THE DEPENDENCY ARRAY (THE 3 SCENARIOS)
+================================================================================
+The second argument of `useEffect` is an array called the DEPENDENCY ARRAY.
+It tells React WHEN to re-run the effect.
+
+SCENARIO 1: Empty Array `[]`
+  useEffect(() => {
+    console.log("Runs ONLY ONCE when the component first appears on screen!");
+    // Perfect for fetching initial data from an API!
+  }, []);
+
+SCENARIO 2: With Dependencies `[count, searchTerm]`
+  useEffect(() => {
+    console.log("Runs on mount, and whenever 'count' or 'searchTerm' changes!");
+    // Perfect for live search inputs or filter updates!
+  }, [count, searchTerm]);
+
+SCENARIO 3: No Array at all (DANGER!)
+  useEffect(() => {
+    console.log("Runs on EVERY SINGLE RENDER!");
+  });
+  ⚠️ Warning: You rarely want this. If you update state inside this effect, 
+  you trigger an INFINITE CRASH LOOP!
+
+================================================================================
+CHAPTER 4: WHAT IS A REST API?
+================================================================================
+An API (Application Programming Interface) is like a waiter in a restaurant:
+- You (The React Frontend) look at the menu and order a burger.
+- The Waiter (The API) takes your request to the Kitchen (The Server / Database).
+- The Kitchen cooks the food.
+- The Waiter brings back your meal formatted in JSON (JavaScript Object Notation).
+
+JSON looks like regular JavaScript objects and arrays:
+{
+  "city": "Mumbai",
+  "temperature": 31.5,
+  "condition": "Partly Cloudy"
+}
+
+================================================================================
+CHAPTER 5: FETCHING DATA WITH ASYNC / AWAIT
+================================================================================
+We use the browser's built-in `fetch()` function.
+
+Modern Clean Pattern:
+useEffect(() => {
+  async function loadData() {
+    try {
+      const response = await fetch("https://api.adviceslip.com/advice");
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error("Failed to fetch data:", error);
+    }
+  }
+
+  loadData();
+}, []); // Empty array = run once on page load!
+
+================================================================================
+CHAPTER 6: THE 3 NETWORK STATES
+================================================================================
+Network calls take time (50ms to 3 seconds). You must NEVER leave the user with 
+a blank screen! You should always handle 3 states:
+
+1. Loading State (`isLoading = true`): Show a spinner or "Loading...".
+2. Error State (`error != null`): Show a friendly message ("Oops, check wifi!").
+3. Success State (`data`): Render the data.
+
+================================================================================
+CHAPTER 7: WEEKLY HANDS-ON PROJECT: "DAILY ADVICE & QUOTE GENERATOR"
+================================================================================
+Goal: Fetch random wisdom and advice from the free public Advice Slip API 
+with loading indicators and a "New Advice" button.
+
+src/App.jsx:
+------------
+import { useState, useEffect } from "react";
+
+function App() {
+  const [advice, setAdvice] = useState("");
+  const [adviceId, setAdviceId] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Function to fetch advice from the API
+  async function fetchAdvice() {
+    setIsLoading(true);
+    setError(null);
+    try {
+      // Using public Advice Slip API
+      const res = await fetch("https://api.adviceslip.com/advice");
+      if (!res.ok) throw new Error("Network response was not ok");
+      const data = await res.json();
+      setAdvice(data.slip.advice);
+      setAdviceId(data.slip.id);
+    } catch (err) {
+      setError("Failed to fetch advice. Check your internet connection.");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  // Fetch once when component first loads
+  useEffect(() => {
+    fetchAdvice();
+  }, []);
+
+  return (
+    <div style={{
+      minHeight: "100vh",
+      backgroundColor: "#0f172a",
+      color: "white",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "20px",
+      fontFamily: "system-ui, sans-serif"
+    }}>
+      <div style={{
+        maxWidth: "480px",
+        width: "100%",
+        backgroundColor: "#1e293b",
+        padding: "32px",
+        borderRadius: "20px",
+        textAlign: "center",
+        boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
+        border: "1px solid #334155"
+      }}>
+        <span style={{
+          color: "#10b981",
+          fontSize: "12px",
+          fontWeight: "bold",
+          letterSpacing: "2px",
+          textTransform: "uppercase"
+        }}>
+          Advice #{adviceId || "--"}
+        </span>
+
+        <div style={{ minHeight: "120px", display: "flex", alignItems: "center", justifyContent: "center", margin: "20px 0" }}>
+          {isLoading ? (
+            <p style={{ color: "#94a3b8", fontStyle: "italic" }}>Fetching wisdom from the web...</p>
+          ) : error ? (
+            <p style={{ color: "#ef4444" }}>{error}</p>
+          ) : (
+            <h2 style={{ fontSize: "22px", lineHeight: "1.5", fontWeight: "600" }}>
+              "{advice}"
+            </h2>
+          )}
+        </div>
+
+        <button 
+          onClick={fetchAdvice}
+          disabled={isLoading}
+          style={{
+            backgroundColor: isLoading ? "#475569" : "#10b981",
+            color: "#0f172a",
+            border: "none",
+            padding: "12px 24px",
+            borderRadius: "50px",
+            fontSize: "15px",
+            fontWeight: "bold",
+            cursor: isLoading ? "not-allowed" : "pointer",
+            transition: "transform 0.2s"
+          }}
+        >
+          {isLoading ? "Thinking..." : "🎲 Give Me Another"}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export default App;
+
+================================================================================
+CHAPTER 8: THE INFINITE FETCH LOOP (BEWARE!)
+================================================================================
+LOOK AT THIS DISASTROUS CODE:
+  useEffect(() => {
+    fetch("/api/data")
+      .then(res => res.json())
+      .then(data => setData(data));
+  }); // ❌ NO DEPENDENCY ARRAY!
+
+What happens:
+1. Component renders.
+2. `useEffect` runs and fetches data.
+3. `setData(data)` updates state.
+4. State change triggers a re-render!
+5. Component re-renders -> `useEffect` runs again!
+6. GOTO STEP 2... FOREVER!
+Your browser will freeze, and your API quota will be exhausted in seconds.
+
+FIX: Always include `[]` if you only want to fetch once on initial load!
+
+================================================================================
+CHAPTER 9: SELF-ASSESSMENT QUIZ & EXERCISES
+================================================================================
+Quiz:
+1. What is a "side effect" in React? Name two examples.
+2. What does an empty dependency array `[]` mean in `useEffect`?
+3. What are the three network states you should handle when making an API call?
+4. Why is it dangerous to call a state setter function inside a `useEffect` with
+   no dependency array?
+
+Weekend Challenge:
+Try fetching weather data for your home city from the free Open-Meteo API
+(https://api.open-meteo.com/v1/forecast?latitude=13.08&longitude=80.27&current_weather=true)
+and display the current temperature on the screen!
+================================================================================

@@ -1,0 +1,361 @@
+================================================================================
+WEEK 01 SYLLABUS BOOK: HTML5 & CSS3 FOUNDATIONS
+================================================================================
+Target Audience: Plus Two (+2 / High School) Beginners
+Estimated Time: 4 to 6 Hours
+Focus: HTML5 Semantic Elements, The CSS Box Model, and Modern Flexbox Layouts
+Milestone Project: "Gamer / Student Profile Card"
+================================================================================
+
+--------------------------------------------------------------------------------
+TABLE OF CONTENTS
+--------------------------------------------------------------------------------
+1. How the Web Works (In Plain English)
+2. HTML5: The Skeleton of the Web
+3. Modern Semantic HTML (Why <div> isn't always the answer)
+4. CSS: Giving Life, Colors & Fonts to the Skeleton
+5. The CSS Box Model (Margins, Borders, Padding, Content)
+6. Flexbox Masterclass (The #1 Tool for React Layouts)
+7. Weekly Hands-on Project: "Gamer / Student Profile Card"
+8. Common Mistakes to Avoid
+9. Self-Assessment Quiz & Exercises
+
+================================================================================
+CHAPTER 1: HOW THE WEB WORKS (IN PLAIN ENGLISH)
+================================================================================
+Whenever you type "www.google.com" or "www.instagram.com" in a browser:
+1. Your Browser (The Client) asks a computer across the world (The Server):
+   "Hey, send me the files for this website!"
+2. The Server replies by sending three core files:
+   - HTML: Tells the browser WHAT content is on the page (text, buttons, images).
+   - CSS: Tells the browser HOW it should look (colors, sizes, layout, spacing).
+   - JavaScript: Makes the page interactive (clicks, animations, popups).
+
+Think of a Human Being:
+  - HTML = Bones & Skeleton (Structure)
+  - CSS  = Clothes, Skin, Hair & Makeup (Aesthetics)
+  - JS   = Muscles & Nervous System (Action & Movement)
+
+================================================================================
+CHAPTER 2: HTML5 — THE SKELETON
+================================================================================
+HTML documents use tags surrounded by angle brackets: `<tag>content</tag>`.
+
+A standard HTML template looks like this:
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My First Webpage</title>
+    <!-- Link CSS stylesheet here -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Welcome to My First Page!</h1>
+    <p>This is where my journey begins.</p>
+  </body>
+</html>
+
+Key Tags Every Developer Must Know:
+- Heading tags: <h1> (most important) down to <h6> (least important).
+- Paragraph tag: <p>Text goes here</p>
+- Image tag (self-closing): <img src="avatar.jpg" alt="Profile picture" />
+- Link tag: <a href="https://google.com" target="_blank">Click here</a>
+- Button tag: <button>Click Me</button>
+- Input tag: <input type="text" placeholder="Enter your name" />
+
+================================================================================
+CHAPTER 3: MODERN SEMANTIC HTML
+================================================================================
+In old web development, people used <div> for everything. Today, we use 
+"Semantic Tags". Semantic means "with meaning".
+
+ASCII Diagram of a Semantic Page Layout:
++-------------------------------------------------------+
+|  <header>  Site Title / Navigation Menu (<nav>)      |
++-------------------------------------------------------+
+|  <main>                                               |
+|    <section>                                          |
+|      <h2>Featured Articles</h2>                       |
+|      <article>Post 1</article>                        |
+|      <article>Post 2</article>                        |
+|    </section>                                         |
++-------------------------------------------------------+
+|  <footer>  Copyright & Contact Details                |
++-------------------------------------------------------+
+
+Why use Semantic tags?
+1. Screen readers for visually impaired users can navigate the page.
+2. Search engines (Google) rank your site much higher.
+3. Your code is much cleaner and easier to read.
+
+================================================================================
+CHAPTER 4: CSS — STYLING THE SKELETON
+================================================================================
+CSS rules follow this simple anatomy:
+
+selector {
+  property: value;
+}
+
+Example:
+h1 {
+  color: #3b82f6;          /* Nice modern blue */
+  font-family: sans-serif;
+  text-align: center;
+}
+
+Three Ways to Select Elements:
+1. Element Selector: Selects all tags of that type.
+   p { font-size: 16px; }
+
+2. Class Selector (Preceded by a dot .): Reusable on multiple elements.
+   .btn-primary { background-color: #6366f1; color: white; }
+
+3. ID Selector (Preceded by a hash #): Unique to only one element per page.
+   #user-header { font-weight: bold; }
+
+RULE OF THUMB: Use classes (.name) 95% of the time!
+
+================================================================================
+CHAPTER 5: THE CSS BOX MODEL
+================================================================================
+Every single HTML element on a webpage is a rectangular box!
+
++---------------------------------------------------------+
+|  MARGIN (Space OUTSIDE the border - pushes others away) |
+|   +-------------------------------------------------+   |
+|   |  BORDER (The outline/frame of the box)          |   |
+|   |   +-----------------------------------------+   |   |
+|   |   |  PADDING (Inner breathing room)         |   |   |
+|   |   |   +---------------------------------+   |   |   |
+|   |   |   |  CONTENT (Text, Image, etc.)    |   |   |   |
+|   |   |   +---------------------------------+   |   |   |
+|   |   +-----------------------------------------+   |   |
+|   +-------------------------------------------------+   |
++---------------------------------------------------------+
+
+Golden Rule of CSS Reset:
+Always include this at the top of your CSS file:
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Ensures padding doesn't inflate element width */
+}
+
+================================================================================
+CHAPTER 6: FLEXBOX MASTERCLASS (CRITICAL FOR REACT)
+================================================================================
+Flexbox makes centering, aligning, and arranging elements super easy.
+
+Step 1: Turn on Flexbox on the parent container:
+.container {
+  display: flex;
+}
+
+Step 2: Control the Main Axis (Horizontal by default):
+  justify-content: flex-start;  /* Align to left */
+  justify-content: center;      /* Center horizontally */
+  justify-content: space-between; /* Spread apart evenly */
+  justify-content: space-evenly;  /* Equal gap everywhere */
+
+Step 3: Control the Cross Axis (Vertical by default):
+  align-items: center;          /* Center vertically */
+  align-items: flex-start;      /* Align to top */
+
+Step 4: Space between items:
+  gap: 16px;                    /* Adds 16px gap between all flex children */
+
+THE ULTIMATE CENTERING CHEAT CODE:
+Want to center ANYTHING inside a box vertically and horizontally?
+.parent-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+================================================================================
+CHAPTER 7: WEEKLY HANDS-ON PROJECT: "PROFILE CARD"
+================================================================================
+Build a stylish, responsive profile card for yourself, a favorite video game 
+character, or a sports star.
+
+Project Requirements:
+1. An avatar image (circular with a border).
+2. Name (Heading <h2>).
+3. Short bio or tagline (<p>).
+4. Badges showing 3 skills (e.g., "HTML", "Gamer", "Problem Solver") using Flexbox.
+5. A "Follow" or "Contact Me" button with hover effects.
+
+HTML Sample (index.html):
+-------------------------
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Student Profile Card</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="card">
+    <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Alex" alt="Avatar" class="avatar" />
+    <h2 class="name">Alex Carter</h2>
+    <p class="role">Grade 12 Student & Tech Enthusiast</p>
+    
+    <div class="badges">
+      <span class="badge">Physics</span>
+      <span class="badge">Web Dev</span>
+      <span class="badge">Gaming</span>
+    </div>
+
+    <button class="action-btn">Connect With Me</button>
+  </div>
+</body>
+</html>
+
+CSS Sample (style.css):
+-----------------------
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #0f172a; /* Deep dark blue */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.card {
+  background-color: #1e293b;
+  color: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+  width: 320px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 3px solid #6366f1;
+  margin-bottom: 15px;
+}
+
+.name {
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+
+.role {
+  color: #94a3b8;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.badges {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.badge {
+  background-color: #334155;
+  color: #cbd5e1;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.action-btn {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+  width: 100%;
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+================================================================================
+CHAPTER 8: COMMON MISTAKES TO AVOID
+================================================================================
+1. Forgetting to link the CSS file inside the <head> tag.
+2. Forgetting `box-sizing: border-box;` (leads to unexpected scrollbars).
+3. Using inline styles (`style="color: red"`) everywhere instead of a CSS file.
+4. Not closing tags (e.g. leaving a `<div>` unclosed breaks the entire page).
+
+================================================================================
+CHAPTER 9: SELF-ASSESSMENT QUIZ & CHALLENGES
+================================================================================
+Quiz:
+1. What does semantic HTML mean, and why should you use it?
+2. Which part of the CSS Box Model represents the space OUTSIDE the border?
+3. What CSS property and value turns a regular container into a flex container?
+4. How do you horizontally center items in a flex container?
+5. Why is `class` preferred over `id` for general styling?
+
+Bonus Weekend Challenge:
+Add a hover animation to the `.badge` elements so they glow or change color
+when the user moves their mouse over them!
+
+--------------------------------------------------------------------------------
+CHAPTER 9 — SELF-ASSESSMENT QUIZ: ANSWERS & EXPLANATIONS
+--------------------------------------------------------------------------------
+
+1. What does semantic HTML mean, and why should you use it?
+   Semantic HTML uses meaningful elements such as `<header>`, `<nav>`, `<main>`,
+   `<section>`, `<article>`, and `<footer>` to describe the purpose of content.
+   Why use it? It improves accessibility (screen readers), SEO (search ranking),
+   readability, and long-term code maintainability.
+
+2. Which part of the CSS Box Model represents the space OUTSIDE the border?
+   Margin — it creates space outside an element's border and pushes other 
+   elements away.
+
+3. What CSS property and value turns a regular container into a flex container?
+   ```css
+   display: flex;
+   ```
+
+4. How do you horizontally center items in a flex container?
+   ```css
+   justify-content: center;
+   ```
+   `justify-content` controls alignment along the main axis. In the default row 
+   direction, that means horizontal alignment.
+
+5. Why is `class` preferred over `id` for general styling?
+   A class can be reused on multiple elements, while an id should be unique to 
+   only one element within a page. Classes are therefore much more suitable 
+   for modular and reusable CSS styles.
+
+QUICK MEMORY TRICK
++---------------------+---------------------------+
+| Concept             | Remember                  |
++---------------------+---------------------------+
+| Semantic HTML       | Meaningful tags           |
+| Outside border      | margin                    |
+| Flex container      | display: flex             |
+| Horizontal center   | justify-content: center   |
+| Reusable styling    | class                     |
++---------------------+---------------------------+
+================================================================================

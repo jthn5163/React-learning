@@ -1,0 +1,324 @@
+================================================================================
+WEEK 05 SYLLABUS BOOK: LISTS, KEYS & CONTROLLED FORMS
+================================================================================
+Target Audience: Plus Two (+2 / High School) Beginners
+Estimated Time: 4 to 6 Hours
+Focus: Dynamic Lists, The Key Prop, Controlled Form Inputs, and Array Immutability
+Milestone Project: "Student Study & Homework Planner"
+================================================================================
+
+--------------------------------------------------------------------------------
+TABLE OF CONTENTS
+--------------------------------------------------------------------------------
+1. Dynamic Data: From Static HTML to Real-World Lists
+2. Rendering Lists with .map() in JSX
+3. The "Key" Prop: Why React Demands It
+4. Controlled Components: Handling Forms the React Way
+5. Immutable State Updates (Adding, Deleting & Toggling Items)
+6. Weekly Hands-on Project: "Student Study Planner"
+7. The Danger of Mutating Arrays (.push is Forbidden!)
+8. Self-Assessment Quiz & Exercises
+
+================================================================================
+CHAPTER 1: DYNAMIC DATA IN MODERN APPS
+================================================================================
+In real applications, you never hardcode 10 items in HTML. 
+- WhatsApp has a list of chat messages.
+- Spotify has a list of songs in a playlist.
+- YouTube has a grid of recommended videos.
+
+All of these are stored in JavaScript arrays and rendered dynamically on the 
+screen using `.map()`.
+
+================================================================================
+CHAPTER 2: RENDERING LISTS WITH .map()
+================================================================================
+Remember `.map()` from Week 2? In JSX, we use it to transform an array of data 
+objects into an array of JSX elements:
+
+function FruitList() {
+  const fruits = ["Mango", "Apple", "Banana", "Dragonfruit"];
+
+  return (
+    <ul>
+      {fruits.map((fruit, index) => (
+        <li key={index}>{fruit}</li>
+      ))}
+    </ul>
+  );
+}
+
+Notice the round parentheses `(` after the arrow `=>` instead of curly `{`:
+  `fruits.map(fruit => ( <li>{fruit}</li> ))`
+This is an implicit return: it immediately returns the JSX element!
+
+================================================================================
+CHAPTER 3: THE ALL-IMPORTANT "KEY" PROP
+================================================================================
+If you don't provide a `key` prop when mapping in React, you will see a big red 
+warning in your browser console:
+  "Warning: Each child in a list should have a unique 'key' prop."
+
+Why does React need keys?
+Imagine you have a list of 100 students. You delete the student at position 50.
+Without a unique key, React wouldn't know which one was deleted and might have 
+to redraw all 100 rows! 
+With a unique `key={student.id}`, React knows:
+  "Aha! Only item #50 is gone. I will remove only that single element!"
+
+Key Rules:
+1. Always use a unique identifier (like an `id`), NOT an array index if items 
+   can be reordered or deleted.
+2. The key belongs on the OUTERMOST element returned by the `.map()` function.
+
+================================================================================
+CHAPTER 4: CONTROLLED COMPONENTS & FORMS
+================================================================================
+In standard HTML, an `<input>` stores its own value inside the browser DOM.
+In React, we want REACT STATE to be the "Single Source of Truth". This is called 
+a Controlled Component.
+
+The 2 Ingredients of a Controlled Input:
+1. `value`: Tied to a state variable.
+2. `onChange`: An event listener that updates state every time the user types.
+
+Example:
+import { useState } from 'react';
+
+function NameForm() {
+  const [userName, setUserName] = useState("");
+
+  return (
+    <div>
+      <input 
+        type="text" 
+        placeholder="Enter your name" 
+        value={userName} 
+        onChange={(e) => setUserName(e.target.value)} 
+      />
+      <p>Hello, {userName ? userName : "stranger"}!</p>
+    </div>
+  );
+}
+
+What is `e.target.value`?
+- `e` is the Event object provided by the browser.
+- `e.target` is the `<input>` element that triggered the event.
+- `e.target.value` is whatever text the user just typed into the box!
+
+================================================================================
+CHAPTER 5: IMMUTABLE STATE UPDATES (THE BIG 3 ACTIONS)
+================================================================================
+When your state is an array of objects, how do you Add, Delete, and Update?
+
+1. ADDING AN ITEM:
+   ❌ tasks.push(newTask); // MUTATION! React won't re-render!
+   ✅ setTasks([...tasks, newTask]); // Spread operator creates a fresh copy!
+
+2. DELETING AN ITEM:
+   Use `.filter()` to keep everything EXCEPT the item with the target ID:
+   ✅ setTasks(tasks.filter(task => task.id !== idToDelete));
+
+3. TOGGLING / UPDATING AN ITEM:
+   Use `.map()` to find the matching item, copy it with the updated field, and 
+   leave all other items untouched:
+   ✅ setTasks(tasks.map(task => {
+        if (task.id === targetId) {
+          return { ...task, isCompleted: !task.isCompleted };
+        }
+        return task;
+      }));
+
+================================================================================
+CHAPTER 6: WEEKLY HANDS-ON PROJECT: "STUDENT STUDY PLANNER"
+================================================================================
+Goal: A full-featured task manager to organize school homework and exam prep.
+
+src/App.jsx:
+------------
+import { useState } from "react";
+
+function App() {
+  const [tasks, setTasks] = useState([
+    { id: 1, text: "Revise Physics Chapter 4 (Electromagnetism)", priority: "High", isDone: false },
+    { id: 2, text: "Complete Math Exercises 6.2", priority: "Medium", isDone: true },
+    { id: 3, text: "Read English Literature Essay", priority: "Low", isDone: false }
+  ]);
+
+  const [inputTask, setInputTask] = useState("");
+  const [priority, setPriority] = useState("Medium");
+
+  function handleAddTask(e) {
+    e.preventDefault(); // Prevents browser from refreshing the page!
+    if (!inputTask.trim()) return; // Don't add empty tasks
+
+    const newTask = {
+      id: Date.now(), // Unique timestamp as ID
+      text: inputTask,
+      priority: priority,
+      isDone: false
+    };
+
+    setTasks([...tasks, newTask]);
+    setInputTask(""); // Clear input box
+  }
+
+  function toggleComplete(id) {
+    setTasks(tasks.map(task => 
+      task.id === id ? { ...task, isDone: !task.isDone } : task
+    ));
+  }
+
+  function deleteTask(id) {
+    setTasks(tasks.filter(task => task.id !== id));
+  }
+
+  return (
+    <div style={{
+      maxWidth: "500px",
+      margin: "40px auto",
+      padding: "24px",
+      backgroundColor: "#1e293b",
+      color: "white",
+      borderRadius: "16px",
+      boxShadow: "0 10px 30px rgba(0,0,0,0.4)",
+      fontFamily: "Segoe UI, sans-serif"
+    }}>
+      <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
+        📚 Plus Two Study & Task Planner
+      </h2>
+
+      {/* Add Task Form */}
+      <form onSubmit={handleAddTask} style={{ display: "flex", gap: "8px", marginBottom: "24px" }}>
+        <input 
+          type="text"
+          placeholder="New homework / study task..."
+          value={inputTask}
+          onChange={(e) => setInputTask(e.target.value)}
+          style={{
+            flex: 1,
+            padding: "10px 14px",
+            borderRadius: "8px",
+            border: "1px solid #475569",
+            backgroundColor: "#0f172a",
+            color: "white"
+          }}
+        />
+        <select 
+          value={priority} 
+          onChange={(e) => setPriority(e.target.value)}
+          style={{
+            padding: "10px",
+            borderRadius: "8px",
+            border: "1px solid #475569",
+            backgroundColor: "#0f172a",
+            color: "white"
+          }}
+        >
+          <option value="High">High 🔴</option>
+          <option value="Medium">Medium 🟡</option>
+          <option value="Low">Low 🟢</option>
+        </select>
+        <button 
+          type="submit"
+          style={{
+            padding: "10px 18px",
+            backgroundColor: "#6366f1",
+            color: "white",
+            border: "none",
+            borderRadius: "8px",
+            cursor: "pointer",
+            fontWeight: "bold"
+          }}
+        >
+          Add
+        </button>
+      </form>
+
+      {/* Task List */}
+      <ul style={{ listStyle: "none", padding: 0 }}>
+        {tasks.length === 0 ? (
+          <p style={{ textAlign: "center", color: "#94a3b8" }}>🎉 All caught up! No tasks left.</p>
+        ) : (
+          tasks.map(task => (
+            <li 
+              key={task.id}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: "12px 16px",
+                backgroundColor: "#334155",
+                borderRadius: "8px",
+                marginBottom: "10px"
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                <input 
+                  type="checkbox"
+                  checked={task.isDone}
+                  onChange={() => toggleComplete(task.id)}
+                  style={{ width: "18px", height: "18px", cursor: "pointer" }}
+                />
+                <span style={{
+                  textDecoration: task.isDone ? "line-through" : "none",
+                  color: task.isDone ? "#94a3b8" : "white"
+                }}>
+                  {task.text}
+                </span>
+              </div>
+
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <span style={{
+                  fontSize: "11px",
+                  padding: "3px 8px",
+                  borderRadius: "10px",
+                  backgroundColor: task.priority === "High" ? "#ef4444" : task.priority === "Medium" ? "#f59e0b" : "#10b981",
+                  color: "white"
+                }}>
+                  {task.priority}
+                </span>
+                <button 
+                  onClick={() => deleteTask(task.id)}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    color: "#f87171",
+                    cursor: "pointer",
+                    fontSize: "16px"
+                  }}
+                >
+                  ✕
+                </button>
+              </div>
+            </li>
+          ))
+        )}
+      </ul>
+    </div>
+  );
+}
+
+export default App;
+
+================================================================================
+CHAPTER 7: COMMON PITFALLS
+================================================================================
+1. Forgetting `e.preventDefault()` inside form submit:
+   The page will instantly reload, wiping out your entire state!
+2. Using `.push()` or `.splice()` directly on state arrays.
+3. Forgetting the `key` prop on mapped components.
+
+================================================================================
+CHAPTER 8: SELF-ASSESSMENT QUIZ & EXERCISES
+================================================================================
+Quiz:
+1. Why does React require a unique `key` prop when rendering lists with `.map()`?
+2. What does `e.preventDefault()` do in a form submission handler?
+3. How do you delete an item from an array without mutating the original array?
+4. What is a "Controlled Component" in React?
+
+Weekend Challenge:
+Add a task counter at the top of the Study Planner showing:
+"2 of 3 tasks completed" (Hint: Use `.filter(t => t.isDone).length`).
+================================================================================

@@ -1,0 +1,296 @@
+================================================================================
+WEEK 07 SYLLABUS BOOK: ROUTING & MODERN STYLING
+================================================================================
+Target Audience: Plus Two (+2 / High School) Beginners
+Estimated Time: 4 to 6 Hours
+Focus: React Router v6, Client-Side Navigation, Dynamic URLs, and Modern UI Icons
+Milestone Project: "Movie & Anime Explorer (Multi-Page App)"
+================================================================================
+
+--------------------------------------------------------------------------------
+TABLE OF CONTENTS
+--------------------------------------------------------------------------------
+1. Client-Side Routing: Why <a href="..."> is Forbidden in React
+2. Installing react-router-dom
+3. The Core Router Components: BrowserRouter, Routes, Route, and Link
+4. Dynamic Route Parameters (useParams)
+5. Programmatic Navigation (useNavigate)
+6. Modern Styling with CSS Modules & Icons
+7. Weekly Hands-on Project: "Movie & Anime Explorer"
+8. Common Mistakes in React Routing
+9. Self-Assessment Quiz & Exercises
+
+================================================================================
+CHAPTER 1: CLIENT-SIDE ROUTING (SPA ROUTING)
+================================================================================
+When you click a standard link in HTML:
+  <a href="/about.html">About Us</a>
+The browser discards everything, sends a request to the server, and flashes a 
+blank white screen while downloading the new page.
+
+In React Single Page Applications (SPAs):
+We DO NOT reload the browser!
+When a user clicks a link, the React Router intercepts the click, changes the 
+URL in the address bar, and swaps out the visible component instantly!
+This makes the app feel as fast and smooth as a native mobile app.
+
+RULE: In React apps, NEVER use `<a href="...">` for internal pages. 
+Always use `<Link to="...">` from React Router!
+
+================================================================================
+CHAPTER 2: INSTALLING REACT ROUTER
+================================================================================
+React doesn't come with a router built-in. We install the official standard:
+
+In your project terminal:
+  npm install react-router-dom
+
+================================================================================
+CHAPTER 3: THE CORE ROUTER COMPONENTS
+================================================================================
+1. `<BrowserRouter>`: The wrapper that provides routing capabilities to the app.
+2. `<Routes>`: The switchboard that looks at all child routes and picks the match.
+3. `<Route path="..." element={<Component />} />`: Maps a URL path to a Component.
+4. `<Link to="...">`: The SPA replacement for `<a href="...">`.
+
+Basic Setup Example:
+-------------------
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+
+function Home() { return <h2>🏠 Welcome to the Homepage</h2>; }
+function About() { return <h2>ℹ️ About Our School Project</h2>; }
+function NotFound() { return <h2>404 - Page Not Found!</h2>; }
+
+function App() {
+  return (
+    <BrowserRouter>
+      <nav style={{ display: "flex", gap: "16px", padding: "16px", background: "#eee" }}>
+        <Link to="/">Home</Link>
+        <Link to="/about">About</Link>
+      </nav>
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="*" element={<NotFound />} /> {/* Catches all invalid URLs */}
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;
+
+================================================================================
+CHAPTER 4: DYNAMIC ROUTE PARAMETERS (useParams)
+================================================================================
+What if your site has 1,000 movies?
+You don't create 1,000 routes like `/movie/1`, `/movie/2`, etc.
+You create ONE dynamic route using a colon `:`:
+
+  <Route path="/movie/:movieId" element={<MovieDetail />} />
+
+Inside the `MovieDetail` component, you extract the ID using the `useParams` hook:
+
+import { useParams } from "react-router-dom";
+
+function MovieDetail() {
+  const { movieId } = useParams(); // Reads whatever was in the URL!
+
+  return (
+    <div>
+      <h2>Viewing Movie Details for ID: {movieId}</h2>
+    </div>
+  );
+}
+
+================================================================================
+CHAPTER 5: PROGRAMMATIC NAVIGATION (useNavigate)
+================================================================================
+What if you want to redirect the user automatically after they click "Submit" 
+or log in?
+Use the `useNavigate` hook!
+
+import { useNavigate } from "react-router-dom";
+
+function LoginForm() {
+  const navigate = useNavigate();
+
+  function handleLogin() {
+    // Perform authentication check...
+    alert("Login successful!");
+    navigate("/dashboard"); // Instantly sends user to /dashboard!
+  }
+
+  return <button onClick={handleLogin}>Log In</button>;
+}
+
+================================================================================
+CHAPTER 6: MODERN STYLING WITH CSS MODULES
+================================================================================
+In large projects, if two developers create a class called `.title`, their 
+styles clash and overwrite each other.
+
+Solution: CSS Modules!
+Name your stylesheet `ComponentName.module.css`.
+
+File: Card.module.css
+---------------------
+.cardContainer {
+  background-color: #1e293b;
+  border-radius: 12px;
+  padding: 20px;
+}
+.title {
+  color: #38bdf8;
+}
+
+File: Card.jsx
+--------------
+import styles from "./Card.module.css";
+
+function Card() {
+  return (
+    <div className={styles.cardContainer}>
+      <h3 className={styles.title}>Scoped Styles!</h3>
+    </div>
+  );
+}
+
+Vite automatically generates a unique hashed class name (like `Card_title__x9z1`) 
+so it NEVER clashes with any other class in your entire project!
+
+================================================================================
+CHAPTER 7: WEEKLY HANDS-ON PROJECT: "MOVIE & ANIME EXPLORER"
+================================================================================
+Goal: A multi-page movie explorer with a Home Catalog page and a Dynamic Details page.
+
+File 1: src/data/movies.js
+--------------------------
+export const movies = [
+  {
+    id: "interstellar",
+    title: "Interstellar",
+    genre: "Sci-Fi / Adventure",
+    rating: "8.7/10",
+    desc: "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival."
+  },
+  {
+    id: "spirited-away",
+    title: "Spirited Away",
+    genre: "Anime / Fantasy",
+    rating: "8.6/10",
+    desc: "During her family's move to the suburbs, a 10-year-old girl wanders into a world ruled by gods and witches."
+  },
+  {
+    id: "spider-verse",
+    title: "Spider-Man: Across the Spider-Verse",
+    genre: "Animation / Action",
+    rating: "8.7/10",
+    desc: "Miles Morales catapults across the Multiverse, where he encounters a team of Spider-People charged with protecting its existence."
+  }
+];
+
+File 2: src/pages/Home.jsx
+--------------------------
+import { Link } from "react-router-dom";
+import { movies } from "../data/movies";
+
+export default function Home() {
+  return (
+    <div style={{ padding: "30px", color: "white" }}>
+      <h2 style={{ marginBottom: "20px" }}>🍿 Trending Movies & Anime</h2>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "20px" }}>
+        {movies.map(m => (
+          <div key={m.id} style={{ background: "#1e293b", padding: "20px", borderRadius: "12px", border: "1px solid #334155" }}>
+            <h3>{m.title}</h3>
+            <p style={{ color: "#94a3b8", fontSize: "14px" }}>{m.genre}</p>
+            <p style={{ color: "#facc15", fontWeight: "bold" }}>⭐ {m.rating}</p>
+            <Link 
+              to={`/movie/${m.id}`}
+              style={{ display: "inline-block", marginTop: "12px", color: "#38bdf8", textDecoration: "none", fontWeight: "bold" }}
+            >
+              Read Synopsis &rarr;
+            </Link>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+File 3: src/pages/MovieDetail.jsx
+---------------------------------
+import { useParams, Link } from "react-router-dom";
+import { movies } from "../data/movies";
+
+export default function MovieDetail() {
+  const { id } = useParams();
+  const movie = movies.find(m => m.id === id);
+
+  if (!movie) {
+    return (
+      <div style={{ padding: "30px", color: "white" }}>
+        <h2>Movie not found!</h2>
+        <Link to="/" style={{ color: "#38bdf8" }}>&larr; Back to Catalog</Link>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ padding: "40px", color: "white", maxWidth: "600px", margin: "0 auto" }}>
+      <Link to="/" style={{ color: "#38bdf8", textDecoration: "none" }}>&larr; Back to Catalog</Link>
+      <h1 style={{ marginTop: "20px", fontSize: "32px" }}>{movie.title}</h1>
+      <span style={{ background: "#3b82f6", padding: "4px 10px", borderRadius: "20px", fontSize: "12px" }}>
+        {movie.genre}
+      </span>
+      <p style={{ fontSize: "18px", color: "#facc15", margin: "16px 0" }}>Rating: {movie.rating}</p>
+      <p style={{ lineHeight: "1.7", color: "#cbd5e1", fontSize: "16px" }}>{movie.desc}</p>
+    </div>
+  );
+}
+
+File 4: src/App.jsx
+-------------------
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import Home from "./pages/Home";
+import MovieDetail from "./pages/MovieDetail";
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <div style={{ minHeight: "100vh", backgroundColor: "#0f172a" }}>
+        <header style={{ padding: "16px 30px", borderBottom: "1px solid #334155", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <h2 style={{ color: "#38bdf8", margin: 0 }}>🎬 CineScope</h2>
+          <Link to="/" style={{ color: "white", textDecoration: "none", fontWeight: "bold" }}>Catalog</Link>
+        </header>
+
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/movie/:id" element={<MovieDetail />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
+  );
+}
+
+================================================================================
+CHAPTER 8: COMMON MISTAKES IN ROUTING
+================================================================================
+1. Using `<a href="...">` instead of `<Link to="...">`.
+2. Forgetting to wrap `<Routes>` inside `<BrowserRouter>`.
+3. Forgetting the leading colon `:` in dynamic routes (e.g. `/movie/id` instead 
+   of `/movie/:id`).
+
+================================================================================
+CHAPTER 9: SELF-ASSESSMENT QUIZ & EXERCISES
+================================================================================
+Quiz:
+1. Why shouldn't you use standard `<a href>` links inside a React application?
+2. Which hook lets you extract dynamic values from the URL (like an ID)?
+3. What is the role of `<Routes>` in React Router?
+4. What problem do CSS Modules solve compared to global CSS files?
+
+Weekend Challenge:
+Install the popular icon pack `lucide-react` (`npm install lucide-react`) and 
+replace the text arrows in your movie explorer with stylish SVG icon arrows!
+================================================================================

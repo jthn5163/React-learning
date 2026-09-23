@@ -1,0 +1,227 @@
+================================================================================
+WEEK 02 SYLLABUS BOOK: MODERN JAVASCRIPT FOR REACT
+================================================================================
+Target Audience: Plus Two (+2 / High School) Beginners
+Estimated Time: 4 to 6 Hours
+Focus: ES6+, Arrow Functions, Destructuring, and Essential Array Methods
+Milestone Project: "High-Scorer Exam Filter & Marksheet Generator"
+================================================================================
+
+--------------------------------------------------------------------------------
+TABLE OF CONTENTS
+--------------------------------------------------------------------------------
+1. Why React Requires Modern JavaScript (ES6+)
+2. Variables: let vs const (The Death of var)
+3. Arrow Functions: Shorter, Cleaner Syntax
+4. Template Literals: String Formatting Made Easy
+5. Destructuring Objects and Arrays
+6. The Two Most Important Array Methods in React: .map() & .filter()
+7. The Spread Operator (...)
+8. ES6 Modules: import and export
+9. Weekly Hands-on Project: "High-Scorer Exam Filter"
+10. Self-Assessment Quiz & Exercises
+
+================================================================================
+CHAPTER 1: WHY REACT REQUIRES MODERN JAVASCRIPT
+================================================================================
+React is NOT a separate language. React IS JavaScript with UI superpowers!
+In 2015, JavaScript received a massive upgrade called ES6 (ECMAScript 2015).
+React code heavily relies on these modern syntax improvements. If you master 
+the 5 core ES6 features in this book, learning React next week will feel like a 
+breeze.
+
+================================================================================
+CHAPTER 2: VARIABLES — LET VS CONST
+================================================================================
+In old JavaScript, developers used `var`. `var` had confusing scoping rules 
+that caused bugs. Today:
+- `const`: For values that will NEVER be reassigned (Use this by default!)
+- `let`: For values that WILL change over time (e.g. counters, loop variables)
+
+Examples:
+  const schoolName = "St. Xavier's Higher Secondary";
+  // schoolName = "Other School"; // ERROR: Assignment to constant variable!
+
+  let score = 85;
+  score = 92; // Perfectly valid!
+
+RULE: Always use `const`. Only switch to `let` if you know the value must change.
+
+================================================================================
+CHAPTER 3: ARROW FUNCTIONS
+================================================================================
+Traditional Function:
+  function calculateTotal(price, tax) {
+    return price + tax;
+  }
+
+Modern Arrow Function:
+  const calculateTotal = (price, tax) => {
+    return price + tax;
+  };
+
+Concise Arrow Function (Implicit Return):
+If your function only does one thing, you can drop the curly braces and `return`:
+  const calculateTotal = (price, tax) => price + tax;
+  const square = (x) => x * x;
+
+Why React loves arrow functions:
+In React, we pass functions as event handlers:
+  <button onClick={() => alert("Button clicked!")}>Click</button>
+
+================================================================================
+CHAPTER 4: TEMPLATE LITERALS
+================================================================================
+No more messy string concatenation with `+` signs!
+Use backticks ( ` ` ) and `${expression}`:
+
+Old Way:
+  const student = "Rohan";
+  const mark = 94;
+  console.log("Student " + student + " scored " + mark + "% on the exam.");
+
+Modern Way:
+  console.log(`Student ${student} scored ${mark}% on the exam.`);
+
+You can even run calculations inside:
+  console.log(`Total after 18% GST: Rs. ${price * 1.18}`);
+
+================================================================================
+CHAPTER 5: DESTRUCTURING (OBJECTS & ARRAYS)
+================================================================================
+Destructuring unpacks values from objects or arrays into distinct variables.
+
+1. Object Destructuring (You will use this every day in React Props):
+  const student = {
+    name: "Ananya",
+    stream: "Computer Science",
+    grade: "12th",
+    physicsMark: 98
+  };
+
+  // Old way:
+  // const name = student.name;
+  // const stream = student.stream;
+
+  // Modern Destructuring:
+  const { name, stream, physicsMark } = student;
+  console.log(`${name} is in ${stream}`);
+
+2. Array Destructuring (You will use this in React useState hook):
+  const colors = ["#ef4444", "#3b82f6", "#10b981"];
+  const [primaryColor, secondaryColor] = colors;
+  console.log(primaryColor); // Output: "#ef4444"
+
+================================================================================
+CHAPTER 6: THE TWO KINGS OF ARRAYS: .map() AND .filter()
+================================================================================
+In React, you NEVER use `for` loops to display items on screen. 
+You use `.map()` and `.filter()`.
+
+1. Array.map() — Transforms every item into something new:
+  const numbers = [2, 4, 6, 8];
+  const doubled = numbers.map(num => num * 2);
+  // Result: [4, 8, 12, 16]
+
+  In React, .map() is used to transform data into HTML elements:
+  const names = ["Rohan", "Priya", "Rahul"];
+  const listItems = names.map(name => `<li>${name}</li>`);
+
+2. Array.filter() — Filters items based on a True/False condition:
+  const scores = [45, 88, 72, 95, 33, 91];
+  const topScores = scores.filter(score => score >= 80);
+  // Result: [88, 95, 91]
+
+Both `.map()` and `.filter()` do NOT modify the original array. 
+They return a brand new array! (This is called Immutability).
+
+================================================================================
+CHAPTER 7: THE SPREAD OPERATOR (...)
+================================================================================
+The three dots `...` unpack items from an array or object.
+
+1. Spreading Arrays:
+  const boys = ["Karan", "Vivek"];
+  const girls = ["Sneha", "Divya"];
+  const allStudents = [...boys, ...girls, "Teacher"];
+  // Result: ["Karan", "Vivek", "Sneha", "Divya", "Teacher"]
+
+2. Copying and Updating Objects (Crucial for React State):
+  const originalProfile = { name: "Aditi", role: "Junior Dev", points: 100 };
+  const updatedProfile = { ...originalProfile, points: 150 };
+  // Result: { name: "Aditi", role: "Junior Dev", points: 150 }
+
+================================================================================
+CHAPTER 8: ES6 MODULES (IMPORT AND EXPORT)
+================================================================================
+In modern JavaScript, code is split into multiple files for cleanliness.
+
+File 1: mathHelper.js
+---------------------
+export const PI = 3.14159;
+export const add = (a, b) => a + b;
+
+const defaultCalculatorName = "MegaCalc 3000";
+export default defaultCalculatorName;
+
+File 2: app.js
+--------------
+import defaultCalculatorName, { PI, add } from './mathHelper.js';
+
+console.log(defaultCalculatorName);
+console.log(add(10, 20));
+
+RULE: You can have multiple named exports (`export const ...`), 
+but only ONE default export (`export default ...`) per file.
+
+================================================================================
+CHAPTER 9: WEEKLY HANDS-ON PROJECT: "HIGH-SCORER FILTER"
+================================================================================
+Goal: Write a JavaScript script (`marksheet.js`) that analyzes student test 
+records using `.map()`, `.filter()`, and destructuring.
+
+Code (Save as marksheet.js and run with Node or in browser console):
+-------------------------------------------------------------------
+const students = [
+  { id: 1, name: "Aarav Sharma", mark: 92, stream: "Science" },
+  { id: 2, name: "Diya Nair", mark: 76, stream: "Commerce" },
+  { id: 3, name: "Kavya Patel", mark: 88, stream: "Science" },
+  { id: 4, name: "Mohammed Zayd", mark: 64, stream: "Humanities" },
+  { id: 5, name: "Rithvik Sen", mark: 95, stream: "Science" }
+];
+
+// Step 1: Filter students scoring >= 80% (Distinction)
+const distinctionStudents = students.filter(student => student.mark >= 80);
+
+// Step 2: Use destructuring & .map() to create formatted certificates
+const certificates = distinctionStudents.map(({ name, mark, stream }) => {
+  return `[CERTIFICATE OF EXCELLENCE] ${name} (${stream}) - Score: ${mark}%`;
+});
+
+// Step 3: Display results
+console.log("=== DISTINCTION HONORS ROLL ===");
+certificates.forEach(cert => console.log(cert));
+
+// Step 4: Calculate Average mark using spread and reduce
+const totalMarks = students.reduce((sum, s) => sum + s.mark, 0);
+const classAverage = (totalMarks / students.length).toFixed(1);
+console.log(`\nOverall Class Average: ${classAverage}%`);
+
+================================================================================
+CHAPTER 10: SELF-ASSESSMENT QUIZ & EXERCISES
+================================================================================
+Quiz:
+1. When should you use `const` vs `let`?
+2. Rewrite this function as a one-line arrow function:
+   function double(n) { return n * 2; }
+3. Extract `name` and `age` from this object using destructuring:
+   const user = { name: "Sam", age: 17, country: "India" };
+4. What is the difference between `.map()` and `.filter()`?
+5. What does the spread operator `...` do when updating an object?
+
+Practice Exercise:
+Given the array `const marks = [45, 92, 88, 32, 99, 70];`:
+1. Filter out all marks below 50 (failing marks).
+2. Add a bonus grace mark of +2 to every remaining mark using `.map()`.
+3. Print the final updated array.
+================================================================================

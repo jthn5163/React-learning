@@ -1,0 +1,298 @@
+================================================================================
+WEEK 03 SYLLABUS BOOK: REACT BASICS, JSX & PROPS
+================================================================================
+Target Audience: Plus Two (+2 / High School) Beginners
+Estimated Time: 4 to 6 Hours
+Focus: Vite Setup, JSX Rules, Functional Components, and Props
+Milestone Project: "Superhero Character Directory"
+================================================================================
+
+--------------------------------------------------------------------------------
+TABLE OF CONTENTS
+--------------------------------------------------------------------------------
+1. Welcome to React: What is it and Why do Top Companies Use it?
+2. Setting Up Your Development Environment with Vite
+3. Anatomy of a Vite React Project (What each file does)
+4. JSX: Writing HTML Inside JavaScript (Rules & Gotchas)
+5. Thinking in Components: The Lego Block Philosophy
+6. Props: Passing Data Downwards
+7. Destructuring Props Like a Pro
+8. Weekly Hands-on Project: "Superhero Character Directory"
+9. Self-Assessment Quiz & Exercises
+
+================================================================================
+CHAPTER 1: WELCOME TO REACT!
+================================================================================
+Imagine you are browsing Instagram or Netflix:
+- When you like a photo or click a movie, the whole browser window DOES NOT 
+  flicker or reload!
+- Only the heart icon or the movie banner changes instantly.
+
+This is called a Single Page Application (SPA).
+Traditional websites reload the whole page for every click. React only updates 
+the EXACT piece of the screen that changed.
+
+Created by Facebook (Meta), React is the most popular frontend library in the 
+world. If you know React, you can build web apps, mobile apps (React Native), 
+and desktop software!
+
+================================================================================
+CHAPTER 2: PROJECT SETUP WITH VITE
+================================================================================
+In the past, developers used a slow tool called `create-react-app`. 
+Today, the entire industry has switched to VITE (pronounced "veet", French for 
+"fast"). Vite takes 2 seconds to start!
+
+Step-by-step setup in your terminal:
+1. Open your terminal or VS Code terminal:
+   cd to your desired workspace folder.
+
+2. Run the Vite creation command:
+   npm create vite@latest my-first-react-app -- --template react
+
+3. Move into the newly created folder:
+   cd my-first-react-app
+
+4. Install the dependencies:
+   npm install
+
+5. Start the local live development server:
+   npm run dev
+
+6. Hold Ctrl and click the local URL (usually http://localhost:5173).
+   Voila! You are running your first React app!
+
+================================================================================
+CHAPTER 3: ANATOMY OF A REACT PROJECT
+================================================================================
+Look at the files inside your project folder:
+
+my-first-react-app/
+├── index.html        -> The ONLY real HTML file in the entire project!
+│                        Contains <div id="root"></div> where React mounts.
+├── package.json      -> The manifest file listing installed packages & scripts.
+├── vite.config.js    -> Configuration for the Vite bundler.
+└── src/              -> WHERE YOU WRITE 100% OF YOUR CODE!
+    ├── main.jsx      -> The entry door: injects React into <div id="root">.
+    ├── App.jsx       -> The root parent component of your entire website.
+    ├── App.css       -> Styles specific to App component.
+    └── index.css     -> Global styles for the entire website.
+
+================================================================================
+CHAPTER 4: JSX — HTML WITH JAVASCRIPT POWERS
+================================================================================
+JSX stands for JavaScript XML. It allows you to write HTML-like markup inside a 
+JavaScript file (`.jsx`).
+
+Three Golden Rules of JSX:
+1. Every component MUST return a single parent element:
+   // ❌ WRONG (Two siblings without parent):
+   return (
+     <h1>Title</h1>
+     <p>Text</p>
+   );
+
+   // ✅ CORRECT (Wrapped in a div or an empty Fragment <>...</>):
+   return (
+     <>
+       <h1>Title</h1>
+       <p>Text</p>
+     </>
+   );
+
+2. Use `className` instead of `class`:
+   In standard JS, `class` is a reserved keyword for OOP classes.
+   // ❌ WRONG:   <div class="card"></div>
+   // ✅ CORRECT: <div className="card"></div>
+
+3. Every single tag MUST be closed:
+   // ❌ WRONG:   <img src="pic.jpg">  <input type="text">  <br>
+   // ✅ CORRECT: <img src="pic.jpg" />  <input type="text" />  <br />
+
+4. The Magic Curly Brackets { }:
+   Anytime you want to run JavaScript inside JSX, put it inside `{ }`:
+   const studentName = "Aryan";
+   const age = 17;
+   return <h1>Hello, {studentName}! Next year you will be {age + 1}.</h1>;
+
+================================================================================
+CHAPTER 5: THINKING IN COMPONENTS
+================================================================================
+A React Component is simply a JavaScript function that returns JSX.
+Component names MUST always start with a CAPITAL LETTER!
+
+Example:
+function Header() {
+  return (
+    <header className="header">
+      <h2>Welcome to My Site</h2>
+    </header>
+  );
+}
+
+You can now use `<Header />` anywhere, like an HTML tag!
+
+// App.jsx
+function App() {
+  return (
+    <div>
+      <Header />
+      <p>Content goes here...</p>
+    </div>
+  );
+}
+export default App;
+
+The Lego Analogy:
+- Header is a Lego brick.
+- Sidebar is a Lego brick.
+- Footer is a Lego brick.
+- In App.jsx, you snap them all together to build a castle!
+
+================================================================================
+CHAPTER 6: PROPS (PASSING DATA DOWNWARDS)
+================================================================================
+What if you want 4 cards, but with different names, images, and powers?
+You don't write 4 separate components! You write ONE reusable component and pass 
+custom data to it using PROPS (short for "Properties").
+
+Think of a Component as a custom function:
+  function greet(name) { ... }  // name is a parameter
+
+In React:
+  <Card title="Iron Man" power="Repulsor Beam" />
+  // title and power are PROPS!
+
+How the child receives props:
+function Card(props) {
+  return (
+    <div className="card">
+      <h3>{props.title}</h3>
+      <p>Superpower: {props.power}</p>
+    </div>
+  );
+}
+
+================================================================================
+CHAPTER 7: DESTRUCTURING PROPS (CLEANER CODE)
+================================================================================
+Writing `props.title`, `props.power`, `props.rating` gets tedious. 
+Pro developers destructure props directly inside the function parameters:
+
+// Pro Style:
+function Card({ title, power, rating = 5 }) {
+  return (
+    <div className="card">
+      <h3>{title}</h3>
+      <p>Superpower: {power}</p>
+      <span>Rating: {rating}/5 Stars</span>
+    </div>
+  );
+}
+
+Notice `rating = 5`? That's a Default Prop! If the parent forgets to provide a 
+rating, it defaults to 5.
+
+================================================================================
+CHAPTER 8: WEEKLY HANDS-ON PROJECT: "SUPERHERO DIRECTORY"
+================================================================================
+Goal: Build a superhero showcase with a reusable `<HeroCard />` component.
+
+File 1: src/components/HeroCard.jsx
+-----------------------------------
+function HeroCard({ name, alterEgo, power, universe, avatarUrl }) {
+  const isMarvel = universe.toLowerCase() === "marvel";
+
+  return (
+    <div style={{
+      border: "1px solid #334155",
+      borderRadius: "12px",
+      padding: "20px",
+      width: "240px",
+      backgroundColor: "#1e293b",
+      color: "white",
+      textAlign: "center"
+    }}>
+      <img 
+        src={avatarUrl} 
+        alt={name} 
+        style={{ width: "80px", height: "80px", borderRadius: "50%" }} 
+      />
+      <h3 style={{ margin: "10px 0 4px" }}>{name}</h3>
+      <p style={{ color: "#94a3b8", fontSize: "14px", margin: "0 0 12px" }}>
+        {alterEgo}
+      </p>
+      <div style={{
+        display: "inline-block",
+        padding: "4px 10px",
+        borderRadius: "12px",
+        fontSize: "12px",
+        fontWeight: "bold",
+        backgroundColor: isMarvel ? "#ef4444" : "#3b82f6",
+        marginBottom: "12px"
+      }}>
+        {universe}
+      </div>
+      <p style={{ fontSize: "14px", color: "#cbd5e1" }}>
+        ⚡ {power}
+      </p>
+    </div>
+  );
+}
+
+export default HeroCard;
+
+File 2: src/App.jsx
+-------------------
+import HeroCard from "./components/HeroCard";
+
+function App() {
+  return (
+    <div style={{ padding: "40px", backgroundColor: "#0f172a", minHeight: "100vh" }}>
+      <h1 style={{ color: "white", textAlign: "center", marginBottom: "30px" }}>
+        🦸 Superheroes Assemble
+      </h1>
+
+      <div style={{ display: "flex", gap: "20px", justifyContent: "center", flexWrap: "wrap" }}>
+        <HeroCard 
+          name="Spider-Man"
+          alterEgo="Peter Parker"
+          power="Web Slinging & Spider Sense"
+          universe="Marvel"
+          avatarUrl="https://api.dicebear.com/7.x/bottts/svg?seed=Spidey"
+        />
+        <HeroCard 
+          name="Batman"
+          alterEgo="Bruce Wayne"
+          power="Martial Arts & High-Tech Gear"
+          universe="DC"
+          avatarUrl="https://api.dicebear.com/7.x/bottts/svg?seed=Batman"
+        />
+        <HeroCard 
+          name="Iron Man"
+          alterEgo="Tony Stark"
+          power="Genius Intellect & Powered Armor"
+          universe="Marvel"
+          avatarUrl="https://api.dicebear.com/7.x/bottts/svg?seed=Tony"
+        />
+      </div>
+    </div>
+  );
+}
+
+export default App;
+
+================================================================================
+CHAPTER 9: SELF-ASSESSMENT QUIZ & EXERCISES
+================================================================================
+Quiz:
+1. Why must React component function names start with a capital letter?
+2. What attribute replaces HTML's `class` in JSX?
+3. How do you embed a JavaScript variable inside JSX markup?
+4. True or False: A parent can pass props to a child, but a child cannot directly change props.
+5. What tool did we use to start our project instead of `create-react-app`?
+
+Weekend Challenge:
+Add a 4th superhero to your app and pass an additional prop called `weakness`.
+Display the weakness inside `<HeroCard />` in red text!
+================================================================================
