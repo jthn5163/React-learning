@@ -119,21 +119,50 @@ In React, you NEVER use `for` loops to display items on screen.
 You use `.map()` and `.filter()`.
 
 1. Array.map() — Transforms every item into something new:
+  Syntax: array.map((currentValue, index, originalArray) => { ... })
+  
+  What it does: It loops over every item in your array, runs a function on that item, 
+  and puts the returned value into a BRAND NEW array. The original array is unchanged.
+
+  Example 1: Mathematical transformations
   const numbers = [2, 4, 6, 8];
   const doubled = numbers.map(num => num * 2);
-  // Result: [4, 8, 12, 16]
+  // numbers is still [2, 4, 6, 8]
+  // doubled is [4, 8, 12, 16]
 
-  In React, .map() is used to transform data into HTML elements:
+  Example 2: Extracting data from objects (Common in React!)
+  const users = [{id: 1, name: "Ali"}, {id: 2, name: "Sara"}];
+  const namesOnly = users.map(user => user.name);
+  // Result: ["Ali", "Sara"]
+
+  In React, .map() is essential to transform data into HTML/JSX elements:
   const names = ["Rohan", "Priya", "Rahul"];
   const listItems = names.map(name => `<li>${name}</li>`);
 
 2. Array.filter() — Filters items based on a True/False condition:
+  Syntax: array.filter((currentValue, index, originalArray) => { ... })
+
+  What it does: It loops over every item and runs a condition check. If the function 
+  returns `true`, the item is KEPT in the new array. If `false`, it is DISCARDED. 
+  The original array is completely untouched.
+
+  Example 1: Filtering simple numbers
   const scores = [45, 88, 72, 95, 33, 91];
   const topScores = scores.filter(score => score >= 80);
-  // Result: [88, 95, 91]
+  // scores is still [45, 88, 72, 95, 33, 91]
+  // topScores is [88, 95, 91]
+
+  Example 2: Filtering objects (Common in search/filter features!)
+  const products = [
+    { name: "Laptop", inStock: true },
+    { name: "Mouse", inStock: false },
+    { name: "Keyboard", inStock: true }
+  ];
+  const availableProducts = products.filter(product => product.inStock === true);
+  // Result: [{name: "Laptop", inStock: true}, {name: "Keyboard", inStock: true}]
 
 Both `.map()` and `.filter()` do NOT modify the original array. 
-They return a brand new array! (This is called Immutability).
+They return a brand new array! (This concept is called Immutability, which is a core principle in React).
 
 ================================================================================
 CHAPTER 7: THE SPREAD OPERATOR (...)
