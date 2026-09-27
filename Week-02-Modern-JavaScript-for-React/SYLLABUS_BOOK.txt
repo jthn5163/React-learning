@@ -16,10 +16,11 @@ TABLE OF CONTENTS
 4. Template Literals: String Formatting Made Easy
 5. Destructuring Objects and Arrays
 6. The Two Most Important Array Methods in React: .map() & .filter()
-7. The Spread Operator (...)
-8. ES6 Modules: import and export
-9. Weekly Hands-on Project: "High-Scorer Exam Filter"
-10. Self-Assessment Quiz & Exercises
+7. Other Essential JS Methods (.reduce, .find, .includes, Object methods)
+8. The Spread Operator (...)
+9. ES6 Modules: import and export
+10. Weekly Hands-on Project: "High-Scorer Exam Filter"
+11. Self-Assessment Quiz & Exercises
 
 ================================================================================
 CHAPTER 1: WHY REACT REQUIRES MODERN JAVASCRIPT
@@ -165,7 +166,35 @@ Both `.map()` and `.filter()` do NOT modify the original array.
 They return a brand new array! (This concept is called Immutability, which is a core principle in React).
 
 ================================================================================
-CHAPTER 7: THE SPREAD OPERATOR (...)
+CHAPTER 7: OTHER ESSENTIAL JS METHODS
+================================================================================
+While `.map()` and `.filter()` are used the most in React, you will also frequently 
+need these other array and object methods:
+
+1. Array.reduce() — Reduce an array to a single value:
+  Often used for calculating totals or accumulating values.
+  const numbers = [10, 20, 30];
+  const sum = numbers.reduce((total, num) => total + num, 0);
+  // Result: 60
+
+2. Array.find() — Find the FIRST item that matches a condition:
+  const users = [{id: 1, name: "Ali"}, {id: 2, name: "Sara"}];
+  const sara = users.find(user => user.name === "Sara");
+  // Result: {id: 2, name: "Sara"}
+
+3. Array.includes() — Check if an array contains a simple value:
+  const allowedRoles = ["admin", "editor"];
+  const canEdit = allowedRoles.includes("admin"); 
+  // Result: true
+
+4. Object.keys(), Object.values(), Object.entries() — Extracting object data:
+  Since you can't `.map()` over an object directly, these methods are handy:
+  const user = { name: "Rohan", age: 20 };
+  console.log(Object.keys(user));   // ["name", "age"]
+  console.log(Object.values(user)); // ["Rohan", 20]
+
+================================================================================
+CHAPTER 8: THE SPREAD OPERATOR (...)
 ================================================================================
 The three dots `...` unpack items from an array or object.
 
@@ -181,7 +210,7 @@ The three dots `...` unpack items from an array or object.
   // Result: { name: "Aditi", role: "Junior Dev", points: 150 }
 
 ================================================================================
-CHAPTER 8: ES6 MODULES (IMPORT AND EXPORT)
+CHAPTER 9: ES6 MODULES (IMPORT AND EXPORT)
 ================================================================================
 In modern JavaScript, code is split into multiple files for cleanliness.
 
@@ -204,7 +233,7 @@ RULE: You can have multiple named exports (`export const ...`),
 but only ONE default export (`export default ...`) per file.
 
 ================================================================================
-CHAPTER 9: WEEKLY HANDS-ON PROJECT: "HIGH-SCORER FILTER"
+CHAPTER 10: WEEKLY HANDS-ON PROJECT: "HIGH-SCORER FILTER"
 ================================================================================
 Goal: Write a JavaScript script (`marksheet.js`) that analyzes student test 
 records using `.map()`, `.filter()`, and destructuring.
@@ -237,7 +266,7 @@ const classAverage = (totalMarks / students.length).toFixed(1);
 console.log(`\nOverall Class Average: ${classAverage}%`);
 
 ================================================================================
-CHAPTER 10: SELF-ASSESSMENT QUIZ & EXERCISES
+CHAPTER 11: SELF-ASSESSMENT QUIZ & EXERCISES
 ================================================================================
 Quiz:
 1. When should you use `const` vs `let`?
