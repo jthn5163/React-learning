@@ -211,7 +211,7 @@ records using `.map()`, `.filter()`, and destructuring.
 
 Code (Save as marksheet.js and run with Node or in browser console):
 -------------------------------------------------------------------
-const students = [
+const students = [ 
   { id: 1, name: "Aarav Sharma", mark: 92, stream: "Science" },
   { id: 2, name: "Diya Nair", mark: 76, stream: "Commerce" },
   { id: 3, name: "Kavya Patel", mark: 88, stream: "Science" },

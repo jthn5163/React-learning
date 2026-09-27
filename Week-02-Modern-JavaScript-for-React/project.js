@@ -6,4 +6,22 @@ const students = [
   { id: 5, name: "Rithvik Sen", mark: 95, stream: "Science" }
 ];
 
-const distinctionStudents = students.filter()
+let count = 1;
+
+const distinctionStudents = students.filter(student=> student.mark >=80);
+// console.log(distinctionStudents);
+
+const certificates = distinctionStudents.map(({name,mark,stream})=>{
+  return `${count++}
+  **************************
+  CENTRE FOR EXCELLENCE
+  **************************
+
+  This is to certify that ${name}
+  has achieved an outstanding score of ${mark}% in ${stream}.
+
+  Signature: Principal
+  `
+});
+
+certificates.forEach(cert=> console.log(cert));
